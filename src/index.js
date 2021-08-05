@@ -9,7 +9,12 @@ import { store, persistor } from './redux/store'
 import './index.css'
 import App from './App'
 
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  gql,
+} from '@apollo/client'
 
 import { resolvers, typeDefs } from './graphql/resolvers'
 
@@ -21,9 +26,12 @@ const client = new ApolloClient({
 })
 
 client.writeQuery({
-  data: {
-    cartHidden: true,
-  },
+  query: gql`
+    {
+      cartHidden @client
+    }
+  `,
+  data: { cartHidden: true },
 })
 
 ReactDOM.render(
